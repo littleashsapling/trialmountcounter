@@ -7,6 +7,12 @@
 //
 
 import UIKit
+/*stuct for title cell
+ stuct for cell cell
+ struct for cell data for collapse
+ title string = title struct
+ and
+ section data string array= section data cell cell array*/
 
 struct cellData {
     var opened = Bool()
