@@ -13,12 +13,26 @@ import UIKit
  title string = title struct
  and
  section data string array= section data cell cell array*/
-
-struct cellData {
-    var opened = Bool()
-    var title = String()
-    var sectionData=[String]()
+struct mountTitle {
+    var allCellMounts = false
+    var humanClick = false
+    var mountTitleName = ""
+    var mountQuest = ""
 }
+
+struct mountCell {
+    var humanClick = false
+    var mountCellName = ""
+    var mountDungeon = ""
+}
+struct cellData {
+    var opened = false
+    var title: mountTitle
+    var sectionData: [ mountCell ]
+}
+
+
+
 
 class TableViewController: UITableViewController {
 
@@ -29,9 +43,11 @@ class TableViewController: UITableViewController {
         // Do any additional setup after loading the view.
         
         tableViewData = [
-            cellData(opened:false, title:"String1", sectionData:["Cell1","Cell2", "Cell3"]),
-            cellData(opened:false, title:"String1", sectionData:["Cell1","Cell2", "Cell3"]),
-            cellData(opened:false, title:"String1", sectionData:["Cell1","Cell2", "Cell3"])]
+            cellData(opened:false,
+                     title: mountTitle(allCellMounts: false,humanClick: false,mountTitleName:  "Horse",mountQuest: "more donught"),
+                     sectionData:[mountCell(humanClick: false, mountCellName: "dark horse", mountDungeon: "any")]
+            )
+        ]
         
     }
     override func didReceiveMemoryWarning() {
@@ -52,13 +68,15 @@ class TableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row==0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") else {return UITableViewCell()}
-            cell.textLabel?.text=tableViewData[indexPath.section].title
+            let cell = tableView.dequeueReusableCell(withIdentifier: "chicken") as! MountTitleTableCell
+            cell.configure(cell: tableViewData[indexPath.section])
+            /*cell.textLabel?.text=tableViewData[indexPath.section].title.mountTitleName*/
             return cell
         }else{
             //use different cell identifier if needed
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") else {return UITableViewCell()}
-            cell.textLabel?.text=tableViewData[indexPath.section].sectionData[indexPath.row - 1];           return cell
+            cell.textLabel?.text=tableViewData[indexPath.section].sectionData[indexPath.row - 1].mountCellName;
+            return cell
             
         }
     }
@@ -75,5 +93,31 @@ class TableViewController: UITableViewController {
                 tableView.reloadSections(sections, with: .none)        }
         }
     }
+
+class MountTitleTableCell : UITableViewCell {
+    @IBOutlet weak var mountTitleLbl: UILabel!
+    
+    @IBOutlet weak var questLbl: UILabel!
+    @IBOutlet weak var mountTitleButton: UIButton!
+    
+    
+    func configure(cell: cellData){
+        mountTitleLbl.text = cell.title.mountTitleName
+       
+    }
 }
 
+class MountCellTableCell : UITableViewCell {
+    @IBOutlet weak var mountCellLbl: UILabel!
+    @IBOutlet weak var trialLbl: UILabel!
+    @IBOutlet weak var mountCellBtn: UIButton!
+    
+    
+    func configure(){
+        let mountName = text ?? ""
+        let mountTrial = textT ?? ""
+        mountCellLbl.text = mountName
+        trialLbl.textT = trialLbl
+    }
+ }
+}
