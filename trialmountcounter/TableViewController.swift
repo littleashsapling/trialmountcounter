@@ -13,22 +13,22 @@ import UIKit
  title string = title struct
  and
  section data string array= section data cell cell array*/
-struct mountTitle {
+struct MountTitle {
     var allCellMounts = false
     var humanClick = false
     var mountTitleName = ""
     var mountQuest = ""
 }
 
-struct mountCell {
+struct MountCell {
     var humanClick = false
     var mountCellName = ""
     var mountDungeon = ""
 }
-struct cellData {
+struct CellData {
     var opened = false
-    var title: mountTitle
-    var sectionData: [ mountCell ]
+    var title: MountTitle
+    var sectionData: [ MountCell ]
 }
 
 
@@ -36,16 +36,16 @@ struct cellData {
 
 class TableViewController: UITableViewController {
 
-    var tableViewData=[cellData]()
+    var tableViewData=[CellData]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         tableViewData = [
-            cellData(opened:false,
-                     title: mountTitle(allCellMounts: false,humanClick: false,mountTitleName:  "Horse",mountQuest: "more donught"),
-                     sectionData:[mountCell(humanClick: false, mountCellName: "dark horse", mountDungeon: "any")]
+            CellData(opened:false,
+                     title: MountTitle(allCellMounts: false,humanClick: false,mountTitleName:  "Horse",mountQuest: "more donught"),
+                     sectionData:[MountCell(humanClick: false, mountCellName: "dark horse", mountDungeon: "any")]
             )
         ]
         
@@ -68,14 +68,14 @@ class TableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row==0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "chicken") as! MountTitleTableCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "titleMount") as! MountTitleTableCell
             cell.configure(cell: tableViewData[indexPath.section])
             /*cell.textLabel?.text=tableViewData[indexPath.section].title.mountTitleName*/
             return cell
         }else{
             //use different cell identifier if needed
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") else {return UITableViewCell()}
-            cell.textLabel?.text=tableViewData[indexPath.section].sectionData[indexPath.row - 1].mountCellName;
+            let cell = tableView.dequeueReusableCell(withIdentifier: "minorMount") as! MountCellTableCell
+            cell.configure(cell: tableViewData[indexPath.section].sectionData[indexPath.row])
             return cell
             
         }
@@ -98,26 +98,25 @@ class MountTitleTableCell : UITableViewCell {
     @IBOutlet weak var mountTitleLbl: UILabel!
     
     @IBOutlet weak var questLbl: UILabel!
+    @IBOutlet weak var mntBtn: UIButton!
     @IBOutlet weak var mountTitleButton: UIButton!
     
     
-    func configure(cell: cellData){
+    func configure(cell: CellData){
         mountTitleLbl.text = cell.title.mountTitleName
        
     }
 }
 
 class MountCellTableCell : UITableViewCell {
+    @IBOutlet weak var mountCellLabel: UILabel!
     @IBOutlet weak var mountCellLbl: UILabel!
     @IBOutlet weak var trialLbl: UILabel!
     @IBOutlet weak var mountCellBtn: UIButton!
     
     
-    func configure(){
-        let mountName = text ?? ""
-        let mountTrial = textT ?? ""
-        mountCellLbl.text = mountName
-        trialLbl.textT = trialLbl
+    func configure(cell: MountCell){
+        mountCellLbl.text = cell.mountCellName
     }
  }
 }

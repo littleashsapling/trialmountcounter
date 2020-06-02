@@ -3,9 +3,37 @@
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--My Controller-->
+        <scene sceneID="6i4-3m-M4b">
+            <objects>
+                <viewController id="flx-oR-wXv" customClass="MyController" customModule="trialmountcounter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UJ1-AU-rvE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J3e-XU-Wsg">
+                                <rect key="frame" x="114" y="61" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="gzc-Mu-Lsv"/>
+                    </view>
+                    <connections>
+                        <outlet property="test" destination="J3e-XU-Wsg" id="RsP-SQ-62h"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bfD-YR-1OY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="328.125" y="-446.83098591549299"/>
+        </scene>
         <!--Table View Controller-->
         <scene sceneID="Ji8-kR-m5n">
             <objects>
@@ -15,7 +43,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="chicken" id="Gv8-5r-zDe" customClass="MountTitleTableCell" customModule="trialmountcounter" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="titleMount" id="Gv8-5r-zDe" customClass="MountTitleTableCell" customModule="trialmountcounter" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="320" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gv8-5r-zDe" id="wSZ-Yp-4Cf">
@@ -44,13 +72,10 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="mountTitleButton" destination="eLE-R1-2Vp" id="vR5-rt-giA"/>
-                                    <outlet property="mountTitleLbl" destination="Nwi-t0-xMC" id="LzQ-8S-awG"/>
-                                    <outlet property="moutnTtitleLbl" destination="Nwi-t0-xMC" id="xyQ-lo-Sh1"/>
-                                    <outlet property="questLbl" destination="xcK-Ex-WpG" id="o1R-Eb-Bb7"/>
+                                    <outlet property="mntBtn" destination="eLE-R1-2Vp" id="src-LV-5KS"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="T1U-bc-vud" customClass="MountCellTableCell" customModule="trialmountcounter" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="minorMount" id="T1U-bc-vud" customClass="MountCellTableCell" customModule="trialmountcounter" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="71.5" width="320" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T1U-bc-vud" id="Bf5-D9-aOM">
@@ -80,6 +105,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="mountCellBtn" destination="N61-K8-kjJ" id="v4q-ja-5BI"/>
+                                    <outlet property="mountCellLabel" destination="Prw-kT-3uE" id="XAv-SV-5Ed"/>
                                     <outlet property="mountCellLbl" destination="Prw-kT-3uE" id="lxk-mw-qFT"/>
                                     <outlet property="trialLbl" destination="48L-ae-600" id="Fga-hQ-ulY"/>
                                 </connections>
