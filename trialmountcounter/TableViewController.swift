@@ -33,19 +33,24 @@ struct CellData {
 
 
 
-
+//cell structure
 class TableViewController: UITableViewController {
 
     var tableViewData=[CellData]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+            tableView.delegate = self
+            tableView.dataSource = self
+        
         // Do any additional setup after loading the view.
         
         tableViewData = [
             CellData(opened:false,
                      title: MountTitle(allCellMounts: false,humanClick: false,mountTitleName:  "Horse",mountQuest: "more donught"),
-                     sectionData:[MountCell(humanClick: false, mountCellName: "dark horse", mountDungeon: "any")]
+                     sectionData:[
+                        MountCell(humanClick: false, mountCellName: "dark horse", mountDungeon: "any"),
+                        MountCell(humanClick: false, mountCellName: "dark horse", mountDungeon: "any")                ]
             )
         ]
         
@@ -54,7 +59,7 @@ class TableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         //Dispose of any recreatable resources
     }
-    
+    //make the cells
     override func numberOfSections(in tableView: UITableView) -> Int {
         return tableViewData.count
     }
@@ -70,17 +75,27 @@ class TableViewController: UITableViewController {
         if indexPath.row==0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "titleMount") as! MountTitleTableCell
             cell.configure(cell: tableViewData[indexPath.section])
+            cell.action = {
+                self.tableViewData[indexPath.section].title.allCellMounts = !self.tableViewData[indexPath.section].title.allCellMounts
+                self.tableViewData[indexPath.section].title.humanClick = !self.tableViewData[indexPath.section].title.humanClick
+                tableView.reloadData()
+            }
             /*cell.textLabel?.text=tableViewData[indexPath.section].title.mountTitleName*/
             return cell
         }else{
             //use different cell identifier if needed
             let cell = tableView.dequeueReusableCell(withIdentifier: "minorMount") as! MountCellTableCell
-            cell.configure(cell: tableViewData[indexPath.section].sectionData[indexPath.row])
+            cell.configure(tableView:tableView, cell: tableViewData[indexPath.section].sectionData[indexPath.row - 1])
+            cell.action = {
+                self.tableViewData[indexPath.section].sectionData[indexPath.row - 1].humanClick = !self.tableViewData[indexPath.section].sectionData[indexPath.row - 1].humanClick
+                tableView.reloadData()
+            }
             return cell
-            
         }
+         
     }
     
+    //title cell open
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0{
             if tableViewData[indexPath.section].opened == true{
@@ -90,33 +105,71 @@ class TableViewController: UITableViewController {
             }else{
                 tableViewData[indexPath.section].opened = true
                 let sections = IndexSet.init(integer: indexPath.section)
-                tableView.reloadSections(sections, with: .none)        }
+                tableView.reloadSections(sections, with: .none)
+                
+            }
         }
     }
+    
+}
 
+// cell classes for filtering data
 class MountTitleTableCell : UITableViewCell {
     @IBOutlet weak var mountTitleLbl: UILabel!
-    
     @IBOutlet weak var questLbl: UILabel!
-    @IBOutlet weak var mntBtn: UIButton!
     @IBOutlet weak var mountTitleButton: UIButton!
+    var cell:CellData?
+    var action = {}
     
     
     func configure(cell: CellData){
+        self.cell = cell
         mountTitleLbl.text = cell.title.mountTitleName
-       
+        questLbl.text = cell.title.mountQuest
+        var allDone = true
+        cell.sectionData.forEach { mount in
+            if !mount.humanClick{
+                allDone = false
+                mountTitleButton.setImage(UIImage(named: "notchecked"), for: .normal)
+            }
+        }
+        if allDone{
+            mountTitleButton.setImage(UIImage(named: "checkmark"), for: .normal)
+        }else{
+            mountTitleButton.setImage(UIImage(named:"notchecked"), for: .normal)
+        }
     }
+    
+    @IBAction func mountTitleClick(_ sender: Any) {
+        action()
+    }
+    /*check if all moutncells are true = alert
+     if all*/
+    
 }
 
+
+
 class MountCellTableCell : UITableViewCell {
-    @IBOutlet weak var mountCellLabel: UILabel!
     @IBOutlet weak var mountCellLbl: UILabel!
     @IBOutlet weak var trialLbl: UILabel!
     @IBOutlet weak var mountCellBtn: UIButton!
+    var cell:MountCell?
+    var action = {}
     
-    
-    func configure(cell: MountCell){
+    func configure(tableView:UITableView, cell: MountCell){
+        self.cell = cell
         mountCellLbl.text = cell.mountCellName
+        trialLbl.text = cell.mountDungeon
+        if cell.humanClick{
+            mountCellBtn.setImage(UIImage(named: "checkmark"), for: .normal)
+        }else{
+            mountCellBtn.setImage(UIImage(named: "notchecked"), for: .normal)
+        }
+    }
+    
+    @IBAction func cellButtonClick(_ sender: Any){
+        action()
     }
  }
-}
+
