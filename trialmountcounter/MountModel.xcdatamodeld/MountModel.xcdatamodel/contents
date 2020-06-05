@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Entity" representedClassName="Entity" syncable="YES" codeGenerationType="class"/>
+    <entity name="Entity1" representedClassName="Entity1" syncable="YES" codeGenerationType="class"/>
+    <entity name="MountCollector" representedClassName="MountCollector" syncable="YES" codeGenerationType="class">
+        <attribute name="epicMountID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="idKey" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="trialMountID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <elements>
+        <element name="MountCollector" positionX="-898.76171875" positionY="-6551.12109375" width="128" height="88"/>
+        <element name="Entity" positionX="-1007.56640625" positionY="-6392.08984375" width="128" height="43"/>
+        <element name="Entity1" positionX="-764.09765625" positionY="-6383.46484375" width="128" height="43"/>
+    </elements>
+</model>

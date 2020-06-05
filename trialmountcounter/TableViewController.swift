@@ -18,6 +18,7 @@ struct MountTitle {
     var humanClick = false
     var mountTitleName = ""
     var mountQuest = ""
+    var backroundColor: UIColor?
 }
 
 struct MountCell {
@@ -42,18 +43,37 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
             tableView.delegate = self
             tableView.dataSource = self
-        
         // Do any additional setup after loading the view.
-        
         tableViewData = [
             CellData(opened:false,
-                     title: MountTitle(allCellMounts: false,humanClick: false,mountTitleName:  "Horse",mountQuest: "more donught"),
+                     title: MountTitle(allCellMounts: false,humanClick: false,mountTitleName:  "Kirin",mountQuest: "Mor Dhona (!) A Legend for a Legend", backroundColor: UIColor(red: 0.949, green: 0.8471, blue: 0.5216, alpha: 1.0)),
                      sectionData:[
-                        MountCell(humanClick: false, mountCellName: "dark horse", mountDungeon: "any"),
-                        MountCell(humanClick: false, mountCellName: "dark horse", mountDungeon: "any")                ]
-            )
-        ]
-        
+                        MountCell(humanClick: false, mountCellName: "Nightmare", mountDungeon: "Bowl of Embers, Howling Eye, The Navel"),
+                        MountCell(humanClick: false, mountCellName: "Aithon", mountDungeon: "Bowl of Embers"),
+                        MountCell(humanClick: false, mountCellName: "Xanthos", mountDungeon: "Howling Eye"),
+                        MountCell(humanClick: false, mountCellName: "Gullfaxi", mountDungeon: "The Navel"),
+                        MountCell(humanClick: false, mountCellName: "Enbar", mountDungeon: "Whorleater"),
+                        MountCell(humanClick: false, mountCellName: "Markab", mountDungeon: "Striking Tree"),
+                        MountCell(humanClick: false, mountCellName: "Boreas", mountDungeon: "Akh Afah Amphitheater")]),
+                CellData(opened:false,
+                     title: MountTitle(allCellMounts: false,humanClick: false,mountTitleName:  "Firebird",mountQuest: "Idyllshire (!) Firey Wings, Firey Hearts", backroundColor: UIColor(red: 0.949, green: 0.8471, blue: 0.5216, alpha: 1.0)),                    sectionData:[
+                       MountCell(humanClick: false, mountCellName: "White Lanner", mountDungeon: "Limitless Blue"),
+                       MountCell(humanClick: false, mountCellName: "Rose Lanner", mountDungeon: "Thok Ast Thok"),
+                       MountCell(humanClick: false, mountCellName: "Round Lanner", mountDungeon: "TMB: Thordan's Reign"),
+                       MountCell(humanClick: false, mountCellName: "Warring Lanner", mountDungeon: "Containment Bay S177"),
+                       MountCell(humanClick: false, mountCellName: "Dark Lanner", mountDungeon: "TMB: Nidhogg's Rage"),
+                       MountCell(humanClick: false, mountCellName: "Sophic Lanner", mountDungeon: "Containment Bay P1T6"),
+                       MountCell(humanClick: false, mountCellName: "Demonic Lanner", mountDungeon: "Containment Bay Z1T9")]),
+                CellData(opened:false,
+                    title: MountTitle(allCellMounts: false,humanClick: false,mountTitleName:  "Kamuy of the Nine Tails",mountQuest: "Kuganne (!) A Lone Wolf No More", backroundColor: UIColor(red: 0.949, green: 0.8471, blue: 0.5216, alpha: 1.0)),
+                    sectionData:[
+                       MountCell(humanClick: false, mountCellName: "Blissful Kamuy", mountDungeon: "Emanation"),
+                       MountCell(humanClick: false, mountCellName: "Revelry Kamuy", mountDungeon: "Pool of Tribute"),
+                       MountCell(humanClick: false, mountCellName: "Legendary Kamuy", mountDungeon: "TMB: Shinry's Dome"),
+                       MountCell(humanClick: false, mountCellName: "Auspicsious Kamuy", mountDungeon: "Jade Sea"),
+                       MountCell(humanClick: false, mountCellName: "Lunar Kamuy", mountDungeon: "THB: Tsukuyomi's Pain"),
+                       MountCell(humanClick: false, mountCellName: "Euphonious Kamuy", mountDungeon: "Hell's Keir"),
+                       MountCell(humanClick: false, mountCellName: "Hallowed Kamuy", mountDungeon: "Weath of snakes")])]
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -81,6 +101,11 @@ class TableViewController: UITableViewController {
                 tableView.reloadData()
             }
             /*cell.textLabel?.text=tableViewData[indexPath.section].title.mountTitleName*/
+            cell.shakeclose = {
+                    self.tableViewData[indexPath.section].opened = !self.tableViewData[indexPath.section].opened
+                let sections = IndexSet.init(integer: indexPath.section)
+                    tableView.reloadSections(sections, with: .none)
+            }
             return cell
         }else{
             //use different cell identifier if needed
@@ -97,22 +122,21 @@ class TableViewController: UITableViewController {
     
     //title cell open
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         if indexPath.row == 0{
-            if tableViewData[indexPath.section].opened == true{
-                tableViewData[indexPath.section].opened = false
-                let sections = IndexSet.init(integer: indexPath.section)
-                tableView.reloadSections(sections, with: .none)
-            }else{
-                tableViewData[indexPath.section].opened = true
-                let sections = IndexSet.init(integer: indexPath.section)
-                tableView.reloadSections(sections, with: .none)
-                
-            }
+            tableViewData[indexPath.section].opened = !tableViewData[indexPath.section].opened
+            let sections = IndexSet.init(integer: indexPath.section)
+            tableView.reloadSections(sections, with: .none)
         }
+    }
+    
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        //TODO: collapse table sections when shaking.
     }
     
 }
 
+    
 // cell classes for filtering data
 class MountTitleTableCell : UITableViewCell {
     @IBOutlet weak var mountTitleLbl: UILabel!
@@ -120,30 +144,41 @@ class MountTitleTableCell : UITableViewCell {
     @IBOutlet weak var mountTitleButton: UIButton!
     var cell:CellData?
     var action = {}
-    
+    var shakeclose = {}
     
     func configure(cell: CellData){
         self.cell = cell
         mountTitleLbl.text = cell.title.mountTitleName
         questLbl.text = cell.title.mountQuest
+        self.backgroundColor = cell.title.backroundColor
         var allDone = true
         cell.sectionData.forEach { mount in
             if !mount.humanClick{
                 allDone = false
-                mountTitleButton.setImage(UIImage(named: "notchecked"), for: .normal)
             }
         }
         if allDone{
-            mountTitleButton.setImage(UIImage(named: "checkmark"), for: .normal)
+            mountTitleButton.setImage(UIImage(named: "alert"), for: .normal)
+            if cell.title.humanClick{
+                mountTitleButton.setImage(UIImage(named: "checkmark"), for: .normal)
+            }
+            
         }else{
             mountTitleButton.setImage(UIImage(named:"notchecked"), for: .normal)
         }
+    
     }
     
     @IBAction func mountTitleClick(_ sender: Any) {
         action()
     }
-    /*check if all moutncells are true = alert
+    
+    //shaken open close
+    
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        print("shake it baby!")
+        shakeclose()
+    }    /*check if all moutncells are true = alert
      if all*/
     
 }
