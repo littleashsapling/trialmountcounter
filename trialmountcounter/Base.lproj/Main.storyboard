@@ -18,10 +18,13 @@
         <scene sceneID="Ji8-kR-m5n">
             <objects>
                 <tableViewController id="rGr-gt-j9u" customClass="TableViewController" customModule="trialmountcounter" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Juc-tg-swr">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Juc-tg-swr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="separatorColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="sectionIndexBackgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="titleMount" id="Gv8-5r-zDe" customClass="MountTitleTableCell" customModule="trialmountcounter" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="320" height="56.5"/>
@@ -121,6 +124,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <color key="tintColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstItem="48L-ae-600" firstAttribute="leading" secondItem="Bf5-D9-aOM" secondAttribute="leading" constant="30" id="4XE-a0-6Eo"/>
                                         <constraint firstAttribute="bottom" secondItem="48L-ae-600" secondAttribute="bottom" constant="5" id="Kr0-BH-9tf"/>
@@ -133,6 +137,8 @@
                                         <constraint firstItem="Prw-kT-3uE" firstAttribute="top" secondItem="Bf5-D9-aOM" secondAttribute="top" constant="5" id="tJ6-rQ-DBm"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <connections>
                                     <outlet property="mountCellBtn" destination="cfn-IP-caH" id="axd-Ei-xEB"/>
                                     <outlet property="mountCellLbl" destination="Prw-kT-3uE" id="grJ-ba-bDf"/>
